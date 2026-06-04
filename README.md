@@ -1,5 +1,7 @@
 # AI Resume Builder
 
+🔗 **Live Demo:** [AI Resume Builder](https://ai-resume-builder-tau-six.vercel.app)
+
 ## Features
 
 ### 1. 🔒 Secure User Authentication  
