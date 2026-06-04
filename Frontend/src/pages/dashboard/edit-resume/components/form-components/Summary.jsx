@@ -10,7 +10,7 @@ import { AIChatSession } from "@/Services/AiModel";
 import { updateThisResume } from "@/Services/resumeAPI";
 
 const prompt =
-  "Job Title: {jobTitle} , Depends on job title give me list of summary for 3 experience levels: Fresher, Mid Level, and Senior in 3-4 lines in array format, with summary and experience_level fields in JSON format";
+  "Job Title: {jobTitle} , Depends on job title give me a list of summaries for 3 experience levels: Fresher, Mid Level, and Senior. Provide the response as a direct JSON array of objects, where each object contains the fields 'summary' (3-4 lines) and 'experience_level'. Do not wrap the array in any parent object.";
 function Summary({ resumeInfo, enanbledNext, enanbledPrev }) {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false); // Declare the undeclared variable using useState
@@ -74,8 +74,40 @@ function Summary({ resumeInfo, enanbledNext, enanbledPrev }) {
     const PROMPT = prompt.replace("{jobTitle}", resumeInfo?.jobTitle);
     try {
       const result = await AIChatSession.sendMessage(PROMPT);
-      console.log(JSON.parse(result.response.text()));
-      setAiGenerateSummeryList(JSON.parse(result.response.text()));
+      const rawText = result.response.text();
+      const cleanText = rawText.replace(/^```json\s*/i, "").replace(/```$/, "").trim();
+      const parsed = JSON.parse(cleanText);
+      
+      let list = [];
+      if (Array.isArray(parsed)) {
+        list = parsed;
+      } else if (parsed && typeof parsed === "object") {
+        // If it's wrapped in an object with a key like "summaries", "levels", etc.
+        for (const key in parsed) {
+          if (Array.isArray(parsed[key])) {
+            list = parsed[key];
+            break;
+          }
+        }
+        // If it's a key-value object of experience levels
+        if (list.length === 0) {
+          for (const key in parsed) {
+            if (typeof parsed[key] === "object" && parsed[key].summary) {
+              list.push({
+                experience_level: key,
+                summary: parsed[key].summary
+              });
+            } else if (typeof parsed[key] === "string") {
+              list.push({
+                experience_level: key,
+                summary: parsed[key]
+              });
+            }
+          }
+        }
+      }
+
+      setAiGenerateSummeryList(list);
       toast("Summary Generated", "success");
     } catch (error) {
       console.log(error);
