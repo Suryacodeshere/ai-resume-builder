@@ -1,57 +1,36 @@
 import React from "react";
 
 function ExperiencePreview({ resumeInfo }) {
-  return (
-    <div className="my-6">
-      {resumeInfo?.experience.length > 0 && (
-        <div>
-          <h2
-            className="text-center font-bold text-sm mb-2"
-            style={{
-              color: resumeInfo?.themeColor,
-            }}
-          >
-            Professional Experience
-          </h2>
-          <hr
-            style={{
-              borderColor: resumeInfo?.themeColor,
-            }}
-          />
-        </div>
-      )}
+  if (!resumeInfo?.experience || resumeInfo.experience.length === 0) return null;
 
-      {resumeInfo?.experience?.map((experience, index) => (
-        <div key={index} className="my-5">
-          <h2
-            className="text-sm font-bold"
-            style={{
-              color: resumeInfo?.themeColor,
-            }}
-          >
-            {experience?.title}
-          </h2>
-          <h2 className="text-xs flex justify-between">
-            {experience?.companyName}
-            {experience?.companyName && experience?.city ? ", " : null}
-            {experience?.city}
-            {experience?.city && experience?.state ? ", " : null}
-            {experience?.state}
-            <span>
-              {experience?.startDate}{" "}
-              {experience?.startDate && experience?.currentlyWorking
-                ? "Present"
-                : experience.endDate
-                ? "To"
-                : null}{" "}
-              {experience?.currentlyWorking ? "Present" : experience.endDate}{" "}
+  return (
+    <div className="my-4 text-black font-lora">
+      <h2 className="text-sm font-bold tracking-wide uppercase">
+        Experience
+      </h2>
+      <hr className="border-t-[1px] border-black my-1" />
+
+      {resumeInfo.experience.map((experience, index) => (
+        <div key={index} className="my-2">
+          <div className="flex justify-between items-baseline text-xs font-semibold">
+            <span>{experience?.title}</span>
+            <span className="font-normal whitespace-nowrap pl-4">
+              {experience?.startDate}
+              {(experience?.startDate && (experience?.currentlyWorking || experience?.endDate)) ? " – " : ""}
+              {experience?.currentlyWorking ? "Present" : experience?.endDate}
             </span>
-          </h2>
-          {/* <p className='text-xs my-2'>
-                    {experience.workSummery}
-                </p> */}
+          </div>
+          <div className="flex justify-between items-baseline text-xs mt-0.5">
+            <span className="italic">{experience?.companyName}</span>
+            <span className="text-gray-800 whitespace-nowrap pl-4">
+              {experience?.city}
+              {experience?.city && experience?.state ? ", " : ""}
+              {experience?.state}
+            </span>
+          </div>
+          
           <div
-            className="text-xs my-2"
+            className="text-[11px] mt-1 leading-normal experience-bullets list-outside"
             dangerouslySetInnerHTML={{ __html: experience?.workSummary }}
           />
         </div>

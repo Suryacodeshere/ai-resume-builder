@@ -1,43 +1,30 @@
 import React from "react";
 
 function SkillsPreview({ resumeInfo }) {
-  return (
-    <div className="my-6">
-      {resumeInfo?.skills.length > 0 && (
-        <div>
-          <h2
-            className="text-center font-bold text-sm mb-2"
-            style={{
-              color: resumeInfo?.themeColor,
-            }}
-          >
-            Skills
-          </h2>
-          <hr
-            style={{
-              borderColor: resumeInfo?.themeColor,
-            }}
-          />
-        </div>
-      )}
+  if (!resumeInfo?.skills || resumeInfo.skills.length === 0) return null;
 
-      <div className="grid grid-cols-2 gap-3 my-4">
-        {resumeInfo?.skills.map((skill, index) => (
-          <div key={index} className="flex items-center justify-between">
-            <h2 className="text-xs">{skill.name}</h2>
-            {skill.name ? (
-              <div className="h-2 bg-gray-200 w-[50%]">
-                <div
-                  className="h-2"
-                  style={{
-                    backgroundColor: resumeInfo.themeColor,
-                    width: skill?.rating * 20 + "%",
-                  }}
-                ></div>
-              </div>
-            ) : null}
-          </div>
-        ))}
+  return (
+    <div className="my-4 text-black font-lora">
+      <h2 className="text-sm font-bold tracking-wide uppercase">
+        Technical Skills
+      </h2>
+      <hr className="border-t-[1px] border-black my-1" />
+
+      <div className="text-xs space-y-0.5">
+        {resumeInfo.skills.map((skill, index) => {
+          // Determine the skills display content. If skillsList exists, use it. Otherwise, show name.
+          const categoryName = skill.name;
+          const listText = skill.skillsList || (skill.rating ? `Level: ${skill.rating}/5` : "");
+          
+          if (!categoryName) return null;
+          
+          return (
+            <div key={index} className="leading-relaxed">
+              <span className="font-bold">{categoryName}: </span>
+              <span>{listText}</span>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

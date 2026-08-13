@@ -9,8 +9,6 @@ import { toast } from "sonner";
 import { AIChatSession } from "@/Services/AiModel";
 import { updateThisResume } from "@/Services/resumeAPI";
 
-const prompt =
-  "Job Title: {jobTitle} , Depends on job title give me a list of summaries for 3 experience levels: Fresher, Mid Level, and Senior. Provide the response as a direct JSON array of objects, where each object contains the fields 'summary' (3-4 lines) and 'experience_level'. Do not wrap the array in any parent object.";
 function Summary({ resumeInfo, enanbledNext, enanbledPrev }) {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false); // Declare the undeclared variable using useState
@@ -64,14 +62,28 @@ function Summary({ resumeInfo, enanbledNext, enanbledPrev }) {
   };
 
   const GenerateSummaryFromAI = async () => {
-    setLoading(true);
-    console.log("Generate Summary From AI for", resumeInfo?.jobTitle);
     if (!resumeInfo?.jobTitle) {
-      toast("Please Add Job Title");
-      setLoading(false);
+      toast.error("Please add Job Title first");
       return;
     }
-    const PROMPT = prompt.replace("{jobTitle}", resumeInfo?.jobTitle);
+    setLoading(true);
+    console.log("Generate Summary From AI for", resumeInfo?.jobTitle);
+
+    let PROMPT = `Job Title: "${resumeInfo.jobTitle}"\n`;
+    if (summary && summary.trim()) {
+      PROMPT += `User's Draft/Focus: "${summary.trim()}"\n`;
+      PROMPT += `Based on the job title and the user's draft/focus, generate a list of optimized, refined summaries for 3 experience levels: Fresher, Mid Level, and Senior. 
+      The generated summaries must incorporate and polish the user's draft details (e.g., if they typed "backend expert", focus the summaries heavily on backend, APIs, databases) and scale the responsibilities/depth accordingly for each level:
+      - Fresher: Emphasize fundamental knowledge, personal projects, and learning speed.
+      - Mid Level: Emphasize practical experience, database/API design, scalability, and code quality.
+      - Senior: Emphasize architecture, system design, technical leadership, and strategic business impact.
+      `;
+    } else {
+      PROMPT += `Based on the job title, generate a list of professional summaries for 3 experience levels: Fresher, Mid Level, and Senior.
+      `;
+    }
+    PROMPT += `\nProvide the response as a direct JSON array of objects, where each object contains the fields 'summary' (3-4 lines) and 'experience_level' (e.g., 'Fresher', 'Mid Level', 'Senior'). Do not wrap the array in any parent object. Do not write markdown annotations.`;
+
     try {
       const result = await AIChatSession.sendMessage(PROMPT);
       const rawText = result.response.text();
@@ -82,14 +94,12 @@ function Summary({ resumeInfo, enanbledNext, enanbledPrev }) {
       if (Array.isArray(parsed)) {
         list = parsed;
       } else if (parsed && typeof parsed === "object") {
-        // If it's wrapped in an object with a key like "summaries", "levels", etc.
         for (const key in parsed) {
           if (Array.isArray(parsed[key])) {
             list = parsed[key];
             break;
           }
         }
-        // If it's a key-value object of experience levels
         if (list.length === 0) {
           for (const key in parsed) {
             if (typeof parsed[key] === "object" && parsed[key].summary) {
@@ -108,10 +118,10 @@ function Summary({ resumeInfo, enanbledNext, enanbledPrev }) {
       }
 
       setAiGenerateSummeryList(list);
-      toast("Summary Generated", "success");
+      toast.success("Summary suggestions generated successfully");
     } catch (error) {
       console.log(error);
-      toast("Error generating summary", `${error.message}`);
+      toast.error("Error generating summary: " + error.message);
     } finally {
       setLoading(false);
     }

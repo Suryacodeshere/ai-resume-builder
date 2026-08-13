@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { getAllResumeData } from "@/Services/resumeAPI";
 import AddResume from "./components/AddResume";
+import ImportResume from "./components/ImportResume";
 import ResumeCard from "./components/ResumeCard";
 
 function Dashboard() {
@@ -40,6 +41,7 @@ function Dashboard() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6 w-full">
           <AddResume />
+          <ImportResume refreshData={fetchAllResumeData} />
           {resumeList.length > 0 &&
             resumeList.map((resume) => (
               <ResumeCard

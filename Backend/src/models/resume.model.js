@@ -9,6 +9,8 @@ const resumeSchema = new mongoose.Schema({
   jobTitle: { type: String, default: "" },
   phone: { type: String, default: "" },
   address: { type: String, default: "" },
+  linkedin: { type: String, default: "" },
+  github: { type: String, default: "" },
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   experience: [
     {
@@ -29,8 +31,9 @@ const resumeSchema = new mongoose.Schema({
   ],
   skills: [
     {
-      name: { type: String },
-      rating: { type: Number },
+      name: { type: String }, // Used as category
+      rating: { type: Number, default: 0 },
+      skillsList: { type: String, default: "" }, // Comma-separated list of skills in this category
     },
   ],
   projects: [
@@ -38,8 +41,25 @@ const resumeSchema = new mongoose.Schema({
       projectName: { type: String },
       techStack: { type: String },
       projectSummary: { type: String },
+      githubLink: { type: String, default: "" },
+      liveLink: { type: String, default: "" },
     },
   ],
+  certifications: [
+    {
+      title: { type: String, default: "" },
+      date: { type: String, default: "" },
+    },
+  ],
+  achievements: [
+    {
+      description: { type: String, default: "" },
+    },
+  ],
+  customSection: {
+    sectionTitle: { type: String, default: "" },
+    summary: { type: String, default: "" },
+  },
   themeColor: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },

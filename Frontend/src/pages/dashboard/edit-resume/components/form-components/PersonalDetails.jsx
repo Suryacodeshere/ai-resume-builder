@@ -19,6 +19,8 @@ function PersonalDetails({ resumeInfo, enanbledNext }) {
     address: resumeInfo?.address || "",
     phone: resumeInfo?.phone || "",
     email: resumeInfo?.email || "",
+    linkedin: resumeInfo?.linkedin || "",
+    github: resumeInfo?.github || "",
   });
 
   const handleInputChange = (e) => {
@@ -47,12 +49,20 @@ function PersonalDetails({ resumeInfo, enanbledNext }) {
         address: e.target.address.value,
         phone: e.target.phone.value,
         email: e.target.email.value,
+        linkedin: e.target.linkedin.value,
+        github: e.target.github.value,
       },
     };
     if (resume_id) {
       try {
         const response = await updateThisResume(resume_id, data);
         toast("Resume Updated", "success");
+        dispatch(
+          addResumeData({
+            ...resumeInfo,
+            ...data.data,
+          })
+        );
       } catch (error) {
         toast(error.message, `failed`);
         console.log(error.message);
@@ -120,6 +130,24 @@ function PersonalDetails({ resumeInfo, enanbledNext }) {
               name="email"
               required
               defaultValue={resumeInfo?.email}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div>
+            <label className="text-sm">LinkedIn Profile Link</label>
+            <Input
+              name="linkedin"
+              placeholder="linkedin.com/in/username"
+              defaultValue={resumeInfo?.linkedin}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div>
+            <label className="text-sm">GitHub Profile Link</label>
+            <Input
+              name="github"
+              placeholder="github.com/username"
+              defaultValue={resumeInfo?.github}
               onChange={handleInputChange}
             />
           </div>

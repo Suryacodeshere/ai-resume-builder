@@ -18,6 +18,7 @@ function Skills({ resumeInfo, enanbledNext }) {
       {
         name: "",
         rating: 0,
+        skillsList: "",
       },
     ]
   );
@@ -28,13 +29,13 @@ function Skills({ resumeInfo, enanbledNext }) {
     try {
       dispatch(addResumeData({ ...resumeInfo, skills: skillsList }));
     } catch (error) {
-      console.log("error in experience context update", error);
+      console.log("error in skills state update", error);
     }
   }, [skillsList]);
 
   const AddNewSkills = () => {
     const list = [...skillsList];
-    list.push({ name: "", rating: 0 });
+    list.push({ name: "", rating: 0, skillsList: "" });
     setSkillsList(list);
   };
 
@@ -58,7 +59,11 @@ function Skills({ resumeInfo, enanbledNext }) {
     setLoading(true);
     const data = {
       data: {
-        skills: skillsList,
+        skills: skillsList.map(skill => ({
+          name: skill.name || "",
+          rating: skill.rating || 0,
+          skillsList: skill.skillsList || ""
+        })),
       },
     };
 
@@ -78,28 +83,33 @@ function Skills({ resumeInfo, enanbledNext }) {
   };
   return (
     <div className="p-5 shadow-lg rounded-lg border-t-primary border-t-4 mt-10">
-      <h2 className="font-bold text-lg">Skills</h2>
-      <p>Add Your top professional key skills</p>
+      <h2 className="font-bold text-lg">Technical & Professional Skills</h2>
+      <p>Group your skills by category (e.g. Languages, Tools) to match professional standards</p>
 
-      <div>
+      <div className="my-5">
         {skillsList.map((item, index) => (
           <div
             key={index}
-            className="flex justify-between mb-2 border rounded-lg p-3 "
+            className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4 border rounded-lg p-3 relative"
           >
             <div>
-              <label className="text-xs">Name</label>
+              <label className="text-xs font-semibold">Skill Category</label>
               <Input
-                className="w-full"
+                className="w-full mt-1"
+                placeholder="e.g. Languages, Web Technologies, Tools"
                 defaultValue={item.name}
                 onChange={(e) => handleChange(index, "name", e.target.value)}
               />
             </div>
-            <Rating
-              style={{ maxWidth: 120 }}
-              value={item.rating}
-              onChange={(v) => handleChange(index, "rating", v)}
-            />
+            <div>
+              <label className="text-xs font-semibold">Skills (Comma separated)</label>
+              <Input
+                className="w-full mt-1"
+                placeholder="e.g. Java, JavaScript, Python"
+                defaultValue={item.skillsList}
+                onChange={(e) => handleChange(index, "skillsList", e.target.value)}
+              />
+            </div>
           </div>
         ))}
       </div>
@@ -111,7 +121,7 @@ function Skills({ resumeInfo, enanbledNext }) {
             className="text-primary"
           >
             {" "}
-            + Add More Skill
+            + Add Category
           </Button>
           <Button
             variant="outline"

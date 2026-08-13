@@ -21,8 +21,10 @@ function AddResume() {
 
   const createResume = async () => {
     setLoading(true);
-    if (resumetitle === "")
-      return console.log("Please add a title to your resume");
+    if (resumetitle === "") {
+      setLoading(false);
+      return;
+    }
     const data = {
       data: {
         title: resumetitle,
@@ -30,15 +32,17 @@ function AddResume() {
       },
     };
     console.log(`Creating Resume ${resumetitle}`);
-    createNewResume(data)
-      .then((res) => {
-        console.log("Prinitng From AddResume Respnse of Create Resume", res);
-        Navigate(`/dashboard/edit-resume/${res.data.resume._id}`);
-      })
-      .finally(() => {
-        setLoading(false);
-        setResumetitle("");
-      });
+    try {
+      const res = await createNewResume(data);
+      const resumeId = res.data.resume._id;
+      Navigate(`/dashboard/edit-resume/${resumeId}`);
+    } catch (error) {
+      console.error("Error creating resume:", error);
+    } finally {
+      setLoading(false);
+      setResumetitle("");
+      setOpenDialog(false);
+    }
   };
   return (
     <>
@@ -59,14 +63,14 @@ function AddResume() {
             <DialogDescription className="text-sm text-gray-400 font-medium my-2">
               Add a title to get started on your resume.
               <Input
-                className="my-4 border-gray-200 focus:border-indigo-500 focus:ring-indigo-500 rounded-xl"
+                className="my-4 border-gray-200 focus:border-indigo-500 focus:ring-indigo-500 rounded-xl text-black"
                 type="text"
                 placeholder="Ex: Senior Full Stack Developer"
                 value={resumetitle}
                 onChange={(e) => setResumetitle(e.target.value.trimStart())}
               />
             </DialogDescription>
-            <div className="gap-2 flex justify-end">
+            <div className="gap-2 flex justify-end pt-4">
               <Button variant="ghost" className="rounded-xl" onClick={() => setOpenDialog(false)}>
                 Cancel
               </Button>

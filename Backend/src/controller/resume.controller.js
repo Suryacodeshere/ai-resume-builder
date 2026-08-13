@@ -31,10 +31,18 @@ const createResume = async (req, res) => {
       jobTitle: "",
       phone: "",
       address: "",
+      linkedin: "",
+      github: "",
       experience: [],
       education: [], // Initialize as an empty array
       skills: [],
       projects: [],
+      certifications: [],
+      achievements: [],
+      customSection: {
+        sectionTitle: "",
+        summary: "",
+      },
     });
 
     return res
