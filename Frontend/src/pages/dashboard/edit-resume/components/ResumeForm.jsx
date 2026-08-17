@@ -80,24 +80,24 @@ function ResumeForm() {
         />
       )}
       {currentIndex === 2 && (
+        <Education
+          resumeInfo={resumeInfo}
+          enanbledNext={setEnabledNext}
+          enabledPrev={setEnabledPrev}
+        />
+      )}
+      {currentIndex === 3 && (
         <Experience
           resumeInfo={resumeInfo}
           enanbledNext={setEnabledNext}
           enanbledPrev={setEnabledPrev}
         />
       )}
-      {currentIndex === 3 && (
+      {currentIndex === 4 && (
         <Project
           resumeInfo={resumeInfo}
           setEnabledNext={setEnabledNext}
           setEnabledPrev={setEnabledPrev}
-        />
-      )}
-      {currentIndex === 4 && (
-        <Education
-          resumeInfo={resumeInfo}
-          enanbledNext={setEnabledNext}
-          enabledPrev={setEnabledPrev}
         />
       )}
       {currentIndex === 5 && (
