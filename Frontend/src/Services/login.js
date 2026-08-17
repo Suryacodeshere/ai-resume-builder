@@ -53,4 +53,15 @@ const logoutUser = async () => {
   }
 };
 
-export { startUser, registerUser, loginUser, logoutUser };
+const loginGuest = async () => {
+  try {
+    const response = await axiosInstance.post("users/guest/");
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      error?.response?.data?.message || error?.message || "Something Went Wrong"
+    );
+  }
+};
+
+export { startUser, registerUser, loginUser, logoutUser, loginGuest };

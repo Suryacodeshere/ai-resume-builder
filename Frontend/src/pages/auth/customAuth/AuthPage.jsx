@@ -8,7 +8,7 @@ import {
   FaEyeSlash,
 } from "react-icons/fa";
 import { motion } from "framer-motion";
-import { loginUser, registerUser } from "@/Services/login";
+import { loginUser, registerUser, loginGuest } from "@/Services/login";
 import { Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -51,6 +51,26 @@ function AuthPage() {
     } catch (error) {
       setSignInError(error.message);
       console.log("Login Failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGuestLogin = async () => {
+    setSignInError("");
+    setLoading(true);
+    try {
+      console.log("Guest Login Started in Frontend");
+      const user = await loginGuest();
+      console.log("Guest Login Completed");
+
+      if (user?.statusCode === 200) {
+        navigate("/");
+      }
+      console.log(user);
+    } catch (error) {
+      setSignInError(error.message);
+      console.log("Guest Login Failed");
     } finally {
       setLoading(false);
     }
@@ -118,7 +138,7 @@ function AuthPage() {
           </button>
         </div>
 
-        <div className="relative overflow-hidden h-80">
+        <div className="relative overflow-hidden h-[380px]">
           {" "}
           {/* Added height to ensure content is visible */}
           <motion.div
@@ -240,11 +260,28 @@ function AuthPage() {
                   "Login"
                 )}
               </button>
-              {signInError && (
+               {signInError && (
                 <div className="text-red-500 text-center mt-2">
                   {signInError}
                 </div>
               )}
+              <div className="flex items-center my-3">
+                <div className="flex-grow border-t border-gray-300"></div>
+                <span className="flex-shrink mx-4 text-gray-500 text-xs uppercase tracking-wider">Or</span>
+                <div className="flex-grow border-t border-gray-300"></div>
+              </div>
+              <button
+                type="button"
+                onClick={handleGuestLogin}
+                className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white py-2 rounded-md flex justify-center items-center font-semibold shadow-md transition-all duration-300 transform active:scale-95"
+                disabled={loading}
+              >
+                {loading ? (
+                  <Loader2 className="animate-spin text-center" />
+                ) : (
+                  "Login as Guest"
+                )}
+              </button>
             </form>
           </motion.div>
         </div>

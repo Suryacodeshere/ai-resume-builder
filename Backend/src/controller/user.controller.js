@@ -152,4 +152,59 @@ const logoutUser = (req, res) => {
   }
 };
 
-export { start, loginUser, logoutUser, registerUser };
+const loginGuest = async (req, res) => {
+  console.log("Guest Login Started");
+  try {
+    const uniqueId = Date.now() + "_" + Math.random().toString(36).substring(2, 7);
+    const email = `guest_${uniqueId}@example.com`;
+    const fullName = `Guest User`;
+    const password = Math.random().toString(36).substring(2, 10);
+
+    const newUser = await User.create({
+      fullName,
+      email,
+      password,
+    });
+
+    console.log("Guest Registration Successful");
+
+    const jwtToken = jwt.sign(
+      { id: newUser.id },
+      process.env.JWT_SECRET_KEY,
+      { expiresIn: process.env.JWT_SECRET_EXPIRES_IN }
+    );
+
+    const cookieOptions = {
+      httpOnly: true,
+      expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day
+      sameSite: process.env.NODE_ENV == "Dev" ? "lax" : "none",
+      secure: process.env.NODE_ENV == "Dev" ? false : true,
+    };
+
+    console.log("Guest Login Successful");
+    return res
+      .cookie("token", jwtToken, cookieOptions)
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          {
+            user: {
+              id: newUser._id,
+              email: newUser.email,
+              fullName: newUser.fullName,
+            },
+          },
+          "Guest logged in successfully."
+        )
+      );
+  } catch (err) {
+    console.log("Guest Login Failed: Server error");
+    console.error("Error during guest login:", err);
+    return res
+      .status(500)
+      .json(new ApiError(500, "Internal Server Error", [], err.stack));
+  }
+};
+
+export { start, loginUser, logoutUser, registerUser, loginGuest };
