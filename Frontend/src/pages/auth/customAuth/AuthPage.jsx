@@ -138,7 +138,7 @@ function AuthPage() {
           </button>
         </div>
 
-        <div className="relative overflow-hidden h-[380px]">
+        <div className="relative overflow-hidden h-[430px]">
           {" "}
           {/* Added height to ensure content is visible */}
           <motion.div
