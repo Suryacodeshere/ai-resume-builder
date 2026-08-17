@@ -106,11 +106,12 @@ const loginUser = async (req, res) => {
       { expiresIn: process.env.JWT_SECRET_EXPIRES_IN } // Add token expiration for better security
     );
 
+    const isDev = process.env.NODE_ENV && process.env.NODE_ENV.toLowerCase() === "dev";
     const cookieOptions = {
       httpOnly: true,
       expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // Set cookie to expire in 1 day
-      sameSite: process.env.NODE_ENV == "Dev" ? "lax" : "none", // Set SameSite attribute for better security
-      secure: process.env.NODE_ENV == "Dev" ? false : true, // Set Secure attribute for better security
+      sameSite: isDev ? "lax" : "none",
+      secure: !isDev,
     };
     
 
@@ -174,11 +175,12 @@ const loginGuest = async (req, res) => {
       { expiresIn: process.env.JWT_SECRET_EXPIRES_IN }
     );
 
+    const isDev = process.env.NODE_ENV && process.env.NODE_ENV.toLowerCase() === "dev";
     const cookieOptions = {
       httpOnly: true,
-      expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day
-      sameSite: process.env.NODE_ENV == "Dev" ? "lax" : "none",
-      secure: process.env.NODE_ENV == "Dev" ? false : true,
+      expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      sameSite: isDev ? "lax" : "none",
+      secure: !isDev,
     };
 
     console.log("Guest Login Successful");
