@@ -34,3 +34,4 @@
 # React specific files
 /public/build
 /public/.env
+.vercel
