@@ -106,7 +106,7 @@ function ImportResume({ refreshData }) {
 
     } catch (error) {
       console.error("Error importing resume:", error);
-      toast.error(error.message || "Failed to parse resume. Check your Gemini API key.");
+      toast.error(error.message || "Failed to parse resume. Please check your AI API key or connection.");
     } finally {
       setLoading(false);
     }
@@ -136,7 +136,7 @@ function ImportResume({ refreshData }) {
               Import Existing Resume
             </DialogTitle>
             <DialogDescription className="text-sm text-gray-400 font-medium my-2">
-              Provide a title and upload your resume. Gemini AI will convert it to LaTeX styling.
+              Provide a title and upload your resume. AI will convert it to LaTeX styling.
             </DialogDescription>
           </DialogHeader>
 

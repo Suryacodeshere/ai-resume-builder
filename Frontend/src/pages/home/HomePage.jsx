@@ -74,7 +74,7 @@ function HomePage() {
 
             {/* Premium Description */}
             <p className="px-0 mb-10 text-lg text-gray-500 md:text-xl lg:px-32 font-medium leading-relaxed">
-              Build. Refine. Shine. Craft your standout resume with Gemini-powered descriptions and summaries tailored for your target roles.
+              Build. Refine. Shine. Craft your standout resume with AI-powered descriptions and summaries tailored for your target roles.
             </p>
 
             {/* Call To Actions */}

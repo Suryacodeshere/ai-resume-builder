@@ -11,7 +11,7 @@ export const AIChatSession = {
   sendMessage: async (prompt) => {
     const key = getApiKey();
     if (!key || key.includes("Create Your Own")) {
-      throw new Error("Gemini API Key is missing. Please enter your API key in the AI Interview Coach panel settings.");
+      throw new Error("AI API Key is missing. Please enter your API key in the settings.");
     }
     
     const genAI = new GoogleGenerativeAI(key);
@@ -33,7 +33,7 @@ export const AIChatSession = {
         });
       } catch (err) {
         lastError = err;
-        console.warn(`Gemini model ${modelName} failed, attempting next fallback model:`, err.message);
+        console.warn(`AI model ${modelName} failed, attempting next fallback model:`, err.message);
       }
     }
     throw lastError;
@@ -42,7 +42,7 @@ export const AIChatSession = {
   parseResume: async (fileBase64, mimeType, rawText) => {
     const key = getApiKey();
     if (!key || key.includes("Create Your Own")) {
-      throw new Error("Gemini API Key is missing. Please configure it in the setting panel or environment variables.");
+      throw new Error("AI API Key is missing. Please configure it in the setting panel or environment variables.");
     }
     
     const genAI = new GoogleGenerativeAI(key);
