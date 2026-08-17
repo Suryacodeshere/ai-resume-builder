@@ -5,6 +5,8 @@ const getApiKey = () => {
   return GEMENI_API_KEY || localStorage.getItem("gemini_api_key") || "";
 };
 
+const GEMINI_MODELS = ["gemini-2.5-flash", "gemini-3.6-flash", "gemini-3.5-flash"];
+
 export const AIChatSession = {
   sendMessage: async (prompt) => {
     const key = getApiKey();
@@ -13,10 +15,6 @@ export const AIChatSession = {
     }
     
     const genAI = new GoogleGenerativeAI(key);
-    const model = genAI.getGenerativeModel({
-      model: "gemini-2.5-flash", // Use 2.5-flash or 1.5-flash
-    });
-
     const generationConfig = {
       temperature: 1,
       topP: 0.95,
@@ -25,10 +23,20 @@ export const AIChatSession = {
       responseMimeType: "application/json",
     };
 
-    return model.generateContent({
-      contents: [{ role: "user", parts: [{ text: prompt }] }],
-      generationConfig,
-    });
+    let lastError = null;
+    for (const modelName of GEMINI_MODELS) {
+      try {
+        const model = genAI.getGenerativeModel({ model: modelName });
+        return await model.generateContent({
+          contents: [{ role: "user", parts: [{ text: prompt }] }],
+          generationConfig,
+        });
+      } catch (err) {
+        lastError = err;
+        console.warn(`Gemini model ${modelName} failed, attempting next fallback model:`, err.message);
+      }
+    }
+    throw lastError;
   },
 
   parseResume: async (fileBase64, mimeType, rawText) => {
@@ -38,9 +46,6 @@ export const AIChatSession = {
     }
     
     const genAI = new GoogleGenerativeAI(key);
-    const model = genAI.getGenerativeModel({
-      model: "gemini-2.5-flash",
-    });
 
     let parts = [];
     if (fileBase64) {
@@ -130,9 +135,19 @@ export const AIChatSession = {
       responseMimeType: "application/json",
     };
 
-    return model.generateContent({
-      contents: [{ role: "user", parts }],
-      generationConfig,
-    });
+    let lastError = null;
+    for (const modelName of GEMINI_MODELS) {
+      try {
+        const model = genAI.getGenerativeModel({ model: modelName });
+        return await model.generateContent({
+          contents: [{ role: "user", parts }],
+          generationConfig,
+        });
+      } catch (err) {
+        lastError = err;
+        console.warn(`Gemini model ${modelName} parse failed, trying next:`, err.message);
+      }
+    }
+    throw lastError;
   }
 };
