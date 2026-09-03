@@ -7,11 +7,12 @@ function CustomSectionPreview({ resumeInfo }) {
   if (!sectionTitle || !summary) return null;
 
   return (
-    <div className="my-4 font-serif text-black">
+    <div className="my-2.5 font-serif text-black">
       {/* Title with bottom underline line matching LaTeX style */}
-      <h2 className="text-[11pt] font-bold tracking-wide uppercase text-black border-b border-black pb-0.5">
+      <h2 className="text-sm font-bold tracking-wide uppercase text-black">
         {sectionTitle}
       </h2>
+      <hr className="border-t-[1px] border-black my-0.5" />
       
       {/* Bullet descriptions */}
       <div 

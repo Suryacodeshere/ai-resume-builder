@@ -46,11 +46,12 @@ function RichTextEditor({ onRichTextEditorChange, index, resumeInfo }) {
     User's Rough Draft: "${draftInput.trim()}"
     
     Requirements for the refined bullet points:
-    1. Follow Google's XYZ formula: "Accomplished [X], as measured by [Y], by doing [Z]".
-    2. Start each bullet point with a strong, action-oriented verb (e.g. Spearheaded, Engineered, Automated, Optimized, Orchestrated).
-    3. Focus on technical implementations, tools, languages, and methodologies used.
-    4. Include quantifiable results and realistic metrics (e.g. "improving system efficiency by 25%", "reducing page load times by 400ms", "increasing test coverage to 92%") to demonstrate high impact.
-    5. Output MUST be an array of HTML list items (<li>...</li>). Do NOT wrap the array in a <ul> tag.
+    1. Generate exactly 2 to 3 concise, high-impact bullet points designed specifically for a tight 1-page resume layout.
+    2. Follow Google's XYZ formula: "Accomplished [X], as measured by [Y], by doing [Z]".
+    3. Start each bullet point with a strong, action-oriented verb (e.g. Spearheaded, Engineered, Automated, Optimized, Orchestrated).
+    4. Focus on technical implementations, tools, languages, and methodologies used with realistic metrics.
+    5. Keep each bullet point to 1-2 lines maximum.
+    6. Output MUST be an array of HTML list items (<li>...</li>). Do NOT wrap the array in a <ul> tag.
     
     Format the response strictly as a JSON object with a single key "experience":
     {

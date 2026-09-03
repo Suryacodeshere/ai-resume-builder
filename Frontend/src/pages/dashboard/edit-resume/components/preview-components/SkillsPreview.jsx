@@ -4,11 +4,11 @@ function SkillsPreview({ resumeInfo }) {
   if (!resumeInfo?.skills || resumeInfo.skills.length === 0) return null;
 
   return (
-    <div className="my-4 text-black font-lora">
+    <div className="my-2.5 text-black font-lora">
       <h2 className="text-sm font-bold tracking-wide uppercase">
         Technical Skills
       </h2>
-      <hr className="border-t-[1px] border-black my-1" />
+      <hr className="border-t-[1px] border-black my-0.5" />
 
       <div className="text-xs space-y-0.5">
         {resumeInfo.skills.map((skill, index) => {

@@ -12,14 +12,14 @@ function ProjectPreview({ resumeInfo }) {
   };
 
   return (
-    <div className="my-4 text-black font-lora">
+    <div className="my-2.5 text-black font-lora">
       <h2 className="text-sm font-bold tracking-wide uppercase">
         Projects
       </h2>
-      <hr className="border-t-[1px] border-black my-1" />
+      <hr className="border-t-[1px] border-black my-0.5" />
 
       {resumeInfo.projects.map((project, index) => (
-        <div key={index} className="my-2">
+        <div key={index} className="my-1.5">
           <div className="flex justify-between items-baseline text-xs font-semibold">
             <span>
               {project?.projectName}

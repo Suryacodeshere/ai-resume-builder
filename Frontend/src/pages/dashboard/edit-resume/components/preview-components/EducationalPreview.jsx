@@ -4,14 +4,14 @@ function EducationalPreview({ resumeInfo }) {
   if (!resumeInfo?.education || resumeInfo.education.length === 0) return null;
 
   return (
-    <div className="my-4 text-black font-lora">
+    <div className="my-2.5 text-black font-lora">
       <h2 className="text-sm font-bold tracking-wide uppercase">
         Education
       </h2>
-      <hr className="border-t-[1px] border-black my-1" />
+      <hr className="border-t-[1px] border-black my-0.5" />
 
       {resumeInfo.education.map((education, index) => (
-        <div key={index} className="my-2">
+        <div key={index} className="my-1.5">
           <div className="flex justify-between items-baseline text-xs font-semibold">
             <span>{education.universityName}</span>
             <span className="font-normal whitespace-nowrap pl-4">

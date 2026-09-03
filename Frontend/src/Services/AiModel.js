@@ -58,18 +58,22 @@ export const AIChatSession = {
     }
 
     const promptText = `
-    You are an expert ATS resume parser. Extract the information from the attached resume document/text and parse its content into a structured JSON object matching this schema:
-    
+    You are an elite ATS resume parser and professional summarizer. Extract the information from the attached resume document/text and parse its content into a structured JSON object matching this schema.
+
+    CRITICAL REQUIREMENT:
+    Your primary objective is to condense, summarize, and optimize large resumes so that the final resume strictly fits within a single 1-page LaTeX format while preserving 100% of the core meaning, context, technologies, metrics, and achievements.
+
+    Schema:
     {
       "firstName": "String",
       "lastName": "String",
       "email": "String",
       "phone": "String",
-      "address": "String (Location or full address)",
+      "address": "String (Location or city/state)",
       "linkedin": "String (LinkedIn URL)",
       "github": "String (GitHub URL)",
       "jobTitle": "String (Target role or title)",
-      "summary": "String",
+      "summary": "String (A concise, punchy 2-3 line executive summary highlighting key strengths and tech stack)",
       "education": [
         {
           "universityName": "String",
@@ -90,7 +94,7 @@ export const AIChatSession = {
           "startDate": "String",
           "endDate": "String",
           "currentlyWorking": "String ('true'/'false')",
-          "workSummary": "String (HTML bullet points wrapped in <ul> and <li> tags, detailing responsibilities and achievements)"
+          "workSummary": "String (HTML bullet points wrapped in <ul> and <li> tags. Condense verbose descriptions into exactly 2 to 3 concise, high-impact bullet points following Google's XYZ formula: Accomplished [X], measured by [Y], by doing [Z]. Retain all metrics and tech stack while removing fluff.)"
         }
       ],
       "projects": [
@@ -99,13 +103,13 @@ export const AIChatSession = {
           "techStack": "String (Comma-separated tools/languages)",
           "githubLink": "String (GitHub Link)",
           "liveLink": "String (Live Demo Link)",
-          "projectSummary": "String (HTML bullet points wrapped in <ul> and <li> tags, detailing project features and contributions)"
+          "projectSummary": "String (HTML bullet points wrapped in <ul> and <li> tags. Exactly 2 compact, impactful bullet points detailing architecture and results.)"
         }
       ],
       "skills": [
         {
-          "name": "String (Category, e.g. Languages, Web Technologies, Tools)",
-          "skillsList": "String (Comma-separated skills in this category, e.g. Java, JavaScript, Python)"
+          "name": "String (Category, e.g. Languages, Frameworks & Libraries, Tools & Cloud)",
+          "skillsList": "String (Comma-separated list of skills in this category)"
         }
       ],
       "certifications": [
@@ -116,16 +120,17 @@ export const AIChatSession = {
       ],
       "achievements": [
         {
-          "description": "String (Bullet point describing achievement)"
+          "description": "String (Single concise bullet point describing achievement)"
         }
       ]
     }
     
     Current resume raw text (use if file upload is missing): "${rawText || ""}"
     
-    Extract all information carefully. If any section is not found in the source, leave it as an empty array or string. Do not invent any data. Write project summaries and experience points in a highly professional recruiter-friendly tech style.
-    
-    Output strictly as a JSON object matching this schema. Do not write markdown annotations.
+    Rules:
+    1. If the input resume has extensive paragraphs or 5+ bullet points per job, summarize them aggressively into 2-3 high-impact, metric-driven bullet points so the resume never overflows 1 page.
+    2. Do not invent fake jobs or fake degrees. Keep all factual context 100% accurate.
+    3. Output strictly as a JSON object matching this schema. Do not write markdown annotations.
     `;
 
     parts.push({ text: promptText });

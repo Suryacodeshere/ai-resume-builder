@@ -8,10 +8,10 @@ function PersonalDetailPreview({ resumeInfo }) {
 
   return (
     <div className="text-black font-lora font-serif">
-      <h1 className="text-3xl text-center font-bold tracking-wide mt-1">
+      <h1 className="text-2xl sm:text-3xl text-center font-bold tracking-wide mt-0.5">
         {resumeInfo?.firstName} {resumeInfo?.lastName}
       </h1>
-      <div className="text-center text-[10pt] mt-2 mb-4 flex flex-wrap justify-center gap-1.5 items-center text-black">
+      <div className="text-center text-[9.5pt] mt-1 mb-2.5 flex flex-wrap justify-center gap-1.5 items-center text-black">
         {phone && <span>{phone}</span>}
         {phone && (email || linkedin || github) && <span className="mx-1 text-gray-500">|</span>}
         
