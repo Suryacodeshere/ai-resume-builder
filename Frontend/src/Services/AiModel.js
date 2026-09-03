@@ -120,17 +120,23 @@ export const AIChatSession = {
       ],
       "achievements": [
         {
-          "description": "String (Single concise bullet point describing achievement)"
+          "description": "String (Single concise bullet point describing achievement or award)"
         }
-      ]
+      ],
+      "customSection": {
+        "sectionTitle": "String (Title of any custom or secondary section present in the resume, e.g. 'Leadership & Community', 'Community & Mentorship', 'Volunteering', 'Positions of Responsibility', 'Extracurricular Activities', 'Publications')",
+        "summary": "String (HTML bullet points wrapped in <ul> and <li> tags detailing the roles, mentorship, community contributions, or activities with dates and impact)"
+      }
     }
     
     Current resume raw text (use if file upload is missing): "${rawText || ""}"
     
-    Rules:
-    1. If the input resume has extensive paragraphs or 5+ bullet points per job, summarize them aggressively into 2-3 high-impact, metric-driven bullet points so the resume never overflows 1 page.
-    2. Do not invent fake jobs or fake degrees. Keep all factual context 100% accurate.
-    3. Output strictly as a JSON object matching this schema. Do not write markdown annotations.
+    CRITICAL EXTRACTION RULES:
+    1. NEVER SKIP CUSTOM OR LEADERSHIP SECTIONS: If the resume contains a section such as 'Leadership & Community', 'Community', 'Volunteering', 'Positions of Responsibility', 'Extracurricular', or 'Open Source', you MUST extract it into 'customSection'. Put the exact heading in 'sectionTitle' (e.g. 'Leadership & Community') and format the roles/bullets as HTML '<ul><li>...</li></ul>' in 'summary'.
+    2. If the resume has an 'Achievements' or 'Honors & Awards' section, populate the 'achievements' array. If achievements are not present but another custom section is present (like 'Leadership & Community'), make sure it is captured in 'customSection'.
+    3. Keep summaries and descriptions concise (2-3 punchy bullets) so the entire resume stays within 1 single A4 page.
+    4. Do not invent fake details. Preserve 100% of real organizations (e.g., NeoG Camp, clubs, hackathons, companies), dates, and metrics.
+    5. Output strictly as a JSON object matching this schema. Do not write markdown annotations.
     `;
 
     parts.push({ text: promptText });

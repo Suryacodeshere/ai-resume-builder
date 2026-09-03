@@ -41,6 +41,15 @@ function CustomSection({ resumeInfo, enanbledNext, enanbledPrev }) {
   );
   const [draftInput, setDraftInput] = useState("");
 
+  // Sync state from resumeInfo when loaded
+  useEffect(() => {
+    if (resumeInfo?.customSection?.sectionTitle || resumeInfo?.customSection?.summary) {
+      setEnabled(true);
+      setSectionTitle(resumeInfo.customSection.sectionTitle || "");
+      setSummaryValue(resumeInfo.customSection.summary || "");
+    }
+  }, [resumeInfo?.customSection?.sectionTitle, resumeInfo?.customSection?.summary]);
+
   // Sync state to Redux when inputs change
   useEffect(() => {
     dispatch(
