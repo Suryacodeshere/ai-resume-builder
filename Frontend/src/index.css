@@ -40,9 +40,10 @@
   .resume-preview-container {
     box-shadow: none !important;
     border: none !important;
-    padding: 0 !important;
-    margin: 0 !important;
+    padding: 0.4in 0.55in !important;
+    margin: 0 auto !important;
     width: 100% !important;
+    box-sizing: border-box !important;
     min-height: 0 !important;
     height: auto !important;
   }
@@ -50,7 +51,7 @@
 
 @page {
   size: A4 portrait;
-  margin: 0.35in 0.45in 0.35in 0.45in;
+  margin: 0;
 }
 
 /* Custom LaTeX Spacings and Bullets */

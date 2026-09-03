@@ -18,7 +18,7 @@ function PreviewPage() {
 
   return (
     <div
-      className="resume-preview-container shadow-md h-full px-8 py-10 bg-white font-lora print:shadow-none print:p-0 print:m-0 print:min-h-0 print:h-auto"
+      className="resume-preview-container shadow-md h-full px-8 py-10 bg-white font-lora print:shadow-none print:m-0 print:min-h-0 print:h-auto"
       style={{
         fontFamily: "'Lora', Georgia, serif",
         minHeight: "297mm",
