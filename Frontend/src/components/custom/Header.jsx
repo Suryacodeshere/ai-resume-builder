@@ -34,7 +34,7 @@ function Header({user}) {
   return (
     <div
       id="printHeader"
-      className="sticky top-0 z-50 flex justify-between px-8 md:px-12 py-3.5 items-center glassmorphism shadow-sm w-full border-b border-white/20 transition-all duration-300"
+      className="no-print print:hidden sticky top-0 z-50 flex justify-between px-8 md:px-12 py-3.5 items-center glassmorphism shadow-sm w-full border-b border-white/20 transition-all duration-300"
     >
       <div className="flex items-center gap-2 hover:opacity-90 transition-opacity cursor-pointer" onClick={() => navigate("/")}>
         <img src={logo} alt="logo" className="w-9 h-9 md:w-10 md:h-10 animate-pulse-slow" />

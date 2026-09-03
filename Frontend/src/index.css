@@ -5,7 +5,16 @@
 @tailwind utilities;
 
 @media print {
-  #noPrint, .no-print, header, nav, button, [role="button"], .theme-toggle-btn {
+  #printHeader,
+  #noPrint,
+  .no-print,
+  header,
+  nav,
+  button,
+  [role="button"],
+  .theme-toggle-btn,
+  .toaster,
+  [data-sonner-toaster] {
     display: none !important;
   }
   body, html {
@@ -14,20 +23,34 @@
     margin: 0 !important;
     padding: 0 !important;
     font-family: 'Lora', Georgia, serif !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
   .print-area {
     width: 100% !important;
+    max-width: 100% !important;
     height: auto !important;
+    min-height: 0 !important;
     padding: 0 !important;
     margin: 0 !important;
     box-shadow: none !important;
     border: none !important;
+    display: block !important;
+  }
+  .resume-preview-container {
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    height: auto !important;
   }
 }
 
 @page {
-  size: A4;
-  margin: 0.6in 0.5in 0.6in 0.5in;
+  size: A4 portrait;
+  margin: 0.35in 0.45in 0.35in 0.45in;
 }
 
 /* Custom LaTeX Spacings and Bullets */

@@ -27,11 +27,11 @@ function ViewResume() {
   };
   return (
     <>
-      <div className="flex flex-col justify-center items-center">
-        <div id="noPrint">
+      <div className="flex flex-col justify-center items-center print:block print:p-0 print:m-0">
+        <div id="noPrint" className="no-print">
           <div className="my-10 mx-10 md:mx-20 lg:mx-36">
             <h2 className="text-center text-2xl font-medium">
-              Congrats! Your Ultimate AI generates Resume is ready !{" "}
+              Congrats! Your Ultimate AI generated Resume is ready !{" "}
             </h2>
             <p className="text-center text-gray-400">
               Now you are ready to download your resume and you can share unique
@@ -53,10 +53,10 @@ function ViewResume() {
           </div>
         </div>
         <div
-          className=" bg-white rounded-lg p-8 print-area"
-          style={{ width: "210mm", height: "297mm" }}
+          className="bg-white rounded-lg p-8 shadow-sm print-area print:p-0 print:m-0 print:w-full print:shadow-none print:rounded-none"
+          style={{ width: "210mm", maxWidth: "100%" }}
         >
-          <div className="print">
+          <div className="print print:p-0 print:m-0 print:w-full">
             <ResumePreview />
           </div>
         </div>

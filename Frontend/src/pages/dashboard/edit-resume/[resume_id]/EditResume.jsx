@@ -15,9 +15,13 @@ export function EditResume() {
     });
   }, [resume_id]);
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 p-10 gap-10">
-      <ResumeForm />
-      <PreviewPage />
+    <div className="grid grid-cols-1 md:grid-cols-2 p-10 gap-10 print:block print:p-0 print:m-0 print:gap-0">
+      <div className="no-print">
+        <ResumeForm />
+      </div>
+      <div className="print-area print:w-full print:p-0 print:m-0">
+        <PreviewPage />
+      </div>
     </div>
   );
 }
