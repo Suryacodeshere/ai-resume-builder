@@ -160,5 +160,52 @@ export const AIChatSession = {
       }
     }
     throw lastError;
+  },
+
+  condenseToSinglePage: async (resumeData) => {
+    const key = getApiKey();
+    if (!key || key.includes("Create Your Own")) {
+      throw new Error("AI API Key is missing. Please configure it in settings.");
+    }
+    
+    const genAI = new GoogleGenerativeAI(key);
+    const generationConfig = {
+      temperature: 0.2,
+      responseMimeType: "application/json",
+    };
+
+    const prompt = `
+    You are an elite LaTeX resume editor and executive resume coach.
+    Take the following full resume JSON data and condense, tighten, and synthesize its summaries and bullet points so that the entire resume will strictly fit onto ONE single A4 page in standard LaTeX format without omitting any jobs, projects, degrees, or key metrics.
+
+    Incoming Resume Data:
+    ${JSON.stringify(resumeData, null, 2)}
+
+    Compaction Rules:
+    1. SUMMARY: Shorten into a crisp, powerful 2-line summary.
+    2. EXPERIENCE: Limit each experience to exactly 2 concise, high-impact bullet points (or 1-2 if multiple roles exist). Eliminate conversational filler while retaining key tech stack, tools, and quantified metrics.
+    3. PROJECTS: Limit each project to exactly 1-2 punchy bullet points highlighting technical architecture and measurable outcome.
+    4. SKILLS: Consolidate into 3-4 clean categories.
+    5. CUSTOM SECTION (e.g. Leadership & Community): Limit to 1-2 concise bullet points with role and organization.
+    6. Maintain 100% of factual truth (names, dates, companies, links, degrees). Do not hallucinate or delete entire sections.
+    
+    Output strictly as a valid JSON object matching the exact incoming resume structure without markdown fences.
+    `;
+
+    let lastError = null;
+    for (const modelName of GEMINI_MODELS) {
+      try {
+        const model = genAI.getGenerativeModel({ model: modelName });
+        return await model.generateContent({
+          contents: [{ role: "user", parts: [{ text: prompt }] }],
+          generationConfig,
+        });
+      } catch (err) {
+        lastError = err;
+        console.warn(`Gemini model ${modelName} condense failed, trying next:`, err.message);
+      }
+    }
+    throw lastError;
   }
 };
+
