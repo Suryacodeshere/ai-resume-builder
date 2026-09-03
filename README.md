@@ -2,76 +2,83 @@
 
 🔗 **Live Demo:** [AI Resume Builder](https://ai-resume-builder-tau-six.vercel.app)
 
-## Features
-
-### 1. 🔒 Secure User Authentication  
-- Custom authentication with **bcrypt** password hashing  
-- **JWT-based** session management and secure cookie authentication
-
-### 2. 🏠 User Dashboard  
-- View, edit, copy, or delete previous resume versions  
-- **Upload & Transform Existing Resumes**: Drag-and-drop your existing PDF or copy-paste raw text, and the built-in Gemini parser will automatically extract and structure your information into the LaTeX template format
-
-### 3. 🎓 Premium LaTeX Styling & Typography  
-- Overleaf-inspired clean LaTeX aesthetic based on classic templates
-- Custom typography force-overrides using elegant serif styles (`Lora`, Georgia)
-- Strictly formatted margins, clean page dividers, and print-ready CSS optimized for standard A4 layouts
-
-### 4. ✍️ Personalized AI Summaries  
-- Dynamic professional summary suggestions generated for three target levels: **Fresher, Mid-Level, and Senior**
-- Tailored directly to what you type (e.g. typing `backend expert` produces optimized backend-focused profiles) or parsed from your existing resume
-
-### 5. 🚀 AI Bullet Points Optimizer (Google STAR/XYZ Formula)  
-- Direct text draft fields for Experience and Projects where you write what you did
-- **Optimize with AI** button that rewrites your rough drafts into highly professional, metric-driven achievements using Google's XYZ formula: *Accomplished [X], as measured by [Y], by doing [Z]*
-
-### 6. 🛠️ Interactive Resume Editor  
-- Step-by-step accordion editor including:
-  - **Personal Details** (Phone, Email, LinkedIn, GitHub with real-time browser autofill syncing)
-  - **Summary** (Personalized professional summaries)
-  - **Experience** (Position titles, companies, and optimized bullet summaries)
-  - **Projects** (Project names, tech stack tags, and implementation details)
-  - **Education** (Degrees, schools, majors, and dates)
-  - **Skills** (Categorized skills with custom labeling)
-  - **Certifications** (Licenses and course credentials)
-  - **Achievements** (Awards, highlights, and milestones)
-- **Custom Choose-Your-Own Categories**: Toggle and add extra sections of your choice (e.g. *Languages*, *Publications*, *Extracurriculars*) with full AI draft optimization support
-
-### 7. 🔍 Real-Time Live Preview  
-- Interactive side-by-side interface showing real-time rendering changes as you type
-- Responsive viewport toggles to view the full canvas on all screen sizes
-
-### 8. 📄 Print & Export Options  
-- Dedicated completion screen to quickly **Download PDF** via standard print layout
-- Clean, customizable theme styling colors
+A full-stack, AI-powered resume builder designed to create interview-ready, ATS-friendly LaTeX-style resumes that strictly fit on **1 single A4 page**.
 
 ---
 
-## Tech Stack
+## ✨ Key Features
+
+### 1. 📄 Smart 1-Page Automatic Summarization & Formatting
+- **Automatic Hierarchical Condensation**: When importing or parsing verbose or multi-page resumes, the AI automatically condenses secondary sections (e.g., *Leadership & Community*, *Achievements*) first, followed by projects and internships, ensuring the entire resume strictly fits onto a **single A4 page** while preserving 100% of the core metrics, tech stack, and contextual accomplishments.
+- **Optimal Space Utilization**: Calibrated LaTeX margins and typographic density to eliminate awkward blank space at the bottom while preventing accidental page spills.
+
+### 2. ⚡ AI Resume Parser & Importer
+- **Drag-and-Drop Resume Import**: Upload existing PDF or plain text resumes. The AI parser extracts personal details, summary, education, experience, projects, categorized skills, certifications, achievements, and custom sections (*Leadership & Community*, *Volunteering*, *Open Source*) directly into editable form steps.
+- **Multi-Model Fallback Resilience**: Features resilient multi-model failover (`gemini-2.5-flash` ➔ `gemini-3.6-flash` ➔ `gemini-3.5-flash`) to ensure zero downtime during high-traffic Google endpoint spikes.
+
+### 3. 🎓 Premium LaTeX Styling & Typography
+- Overleaf-inspired clean LaTeX aesthetic based on standard CS/engineering templates.
+- Custom typography force-overrides using elegant serif styles (`Lora`, Georgia).
+- Strictly formatted margins, clean page dividers (`<hr />`), and print-ready CSS optimized for standard A4 paper size.
+
+### 4. ✍️ Personalized AI Summaries
+- Dynamic professional summary suggestions generated for three target levels: **Fresher, Mid-Level, and Senior**.
+- Tailored directly to what you type (e.g. typing `backend expert` produces optimized backend-focused profiles) or parsed from your existing resume.
+
+### 5. 🚀 AI Bullet Points Optimizer (Google STAR / XYZ Formula)
+- Direct text draft fields for Experience and Projects where you write what you did.
+- **Optimize with AI** button that rewrites rough drafts into highly professional, metric-driven achievements using Google's XYZ formula: *Accomplished [X], as measured by [Y], by doing [Z]*.
+
+### 6. 🛠️ Interactive Multi-Step Editor
+- Step-by-step accordion editor including:
+  - **Personal Details** (Phone, Email, LinkedIn, GitHub with real-time browser autofill syncing)
+  - **Summary** (Personalized professional summaries)
+  - **Education** (Degrees, schools, majors, GPA, and dates)
+  - **Experience** (Job titles, companies, locations, dates, and optimized bullet summaries)
+  - **Projects** (Project names, tech stack tags, GitHub/Live links, and implementation details)
+  - **Technical Skills** (Categorized skills with custom labeling)
+  - **Certifications** (Licenses and course credentials)
+  - **Achievements** (Awards, highlights, and milestones)
+  - **Leadership & Community / Custom Section** (Full support for extra sections like *Leadership & Community*, *Volunteering*, *Publications*, *Extracurriculars*)
+
+### 7. 🔒 Secure Authentication & 1-Click Guest Login
+- Custom authentication with **bcrypt** password hashing and **JWT-based** session management.
+- **1-Click Guest Access**: Try all features immediately with demo guest login.
+- Production-ready cross-origin cookie security (`sameSite: "none"`, `secure: true`).
+
+### 8. 🖨️ Clean 1-Page PDF Print & Export
+- Dedicated completion screen to quickly **Download PDF** via standard print layout.
+- Hides all UI navigation, buttons, and form cards during print export, producing a clean, full-width single-page PDF document.
+
+---
+
+## 💻 Tech Stack
 
 ### Frontend
-- **Core Library**: React.js
+- **Core Library**: React.js 18
 - **Build Tool**: Vite.js
 - **State Management**: Redux Toolkit & React-Redux
-- **Styling**: Tailwind CSS & Vanilla CSS
+- **Styling**: Tailwind CSS & Vanilla CSS (LaTeX Print Styles)
 - **Component Libraries**: Shadcn UI & Radix UI primitives
 - **Icons**: Lucide React
 - **Rich Text Editing**: React Simple WYSIWYG
-- **AI Integrations**: Google Generative AI SDK (Gemini 2.5 Flash API)
+- **AI Integrations**: Google Generative AI SDK (Multi-model failover)
 
 ### Backend
 - **Environment**: Node.js
 - **Web Framework**: Express.js
 - **Database Client**: Mongoose ODM
-- **Authentication**: JSON Web Token (JWT) & bcrypt hashing
+- **Authentication**: JSON Web Token (JWT) & bcryptjs
 - **Middleware**: Cookie-Parser, CORS, Express JSON Parser
 
-### Database
-- **Storage**: MongoDB Atlas (NoSQL cloud database)
+### Database & Deployment
+- **Database**: MongoDB Atlas (Cloud NoSQL)
+- **Frontend Hosting**: Vercel
+- **Backend Hosting**: Render
 
 ---
 
-## Getting Started
+## 🚀 Getting Started
 
 ### 📂 Setup Environment Variables
 
@@ -119,6 +126,6 @@ VITE_APP_URL=http://localhost:5001/
 
 ---
 
-## Developer 👨‍💻
+## 👨‍💻 Author
 
-- [@Surya](https://github.com/suryacodeshere)
+- **Surya** - [@suryacodeshere](https://github.com/suryacodeshere)
