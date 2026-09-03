@@ -134,19 +134,20 @@ export const AIChatSession = {
     CRITICAL 1-PAGE HIERARCHICAL COMPRESSION RULES:
     The resulting resume MUST strictly fit onto ONE single 1-page A4 LaTeX format. To guarantee this, apply this exact summarization hierarchy:
 
-    1. FIRST PRIORITY TO SUMMARIZE (Secondary Sections):
+    1. FIRST PRIORITY TO CONDENSE (Secondary Sections):
+       - Leadership & Community / Volunteering / Custom Section (e.g. NeoG Camp, mentoring, clubs): MUST be captured into 'customSection'. Condense into strictly 1 single concise, punchy bullet point combining role, organization, and primary outcome in 1-2 lines maximum (e.g., "• Mentored 10K+ developers in React & web development at NeoG Camp, hosting regular problem-solving workshops (Sep 2021 – Jun 2023)").
        - Achievements & Awards: Condense into 1-2 ultra-concise, single-line bullets.
-       - Leadership & Community / Volunteering / Custom Section (e.g. NeoG Camp, mentoring, clubs): MUST be captured into 'customSection'. Condense into strictly 1-2 concise, high-impact bullet points combining role, organization, and primary outcome in a single line (e.g., "• Mentored 10K+ developers in React & web development, hosting regular technical problem-solving workshops at NeoG Camp (Sep 2021 – Jun 2023)").
        - Certifications: Keep as clean 1-line title and date.
 
-    2. SECOND PRIORITY TO SUMMARIZE (Projects & Internships):
+    2. SECOND PRIORITY TO CONDENSE (Skills & Projects):
+       - Technical Skills: Group into strictly 3-4 clean categories (e.g., 'Languages & Frameworks', 'State & Tools', 'Architecture & Performance').
        - Projects: Exactly 2 tight, punchy bullet points per project focusing on architecture, tech stack, and quantified metrics.
        - Internships / Junior Roles: Max 2 concise bullet points highlighting core technical contributions.
 
     3. THIRD PRIORITY (Core Experience & Summary):
        - Primary Senior / Mid Experience: 2 to 3 strong, metric-driven bullet points using Google's XYZ formula: Accomplished [X], measured by [Y], by doing [Z].
-       - Summary: Exactly 2 concise, powerful lines highlighting core tech stack and domain expertise.
-       - Education: Clean 1-2 lines per degree.
+       - Summary: Exactly 2 concise lines highlighting target role, years of experience, and primary tech stack.
+       - Education: Clean 1 line per degree.
 
     4. PRESERVE 100% FACTUAL CONTEXT:
        - Keep all real companies, degrees, tech tools, metrics, GitHub/live links, and dates. Do not drop real sections—summarize them compactly so they all fit on 1 page!
