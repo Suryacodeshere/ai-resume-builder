@@ -134,7 +134,7 @@ function HomePage() {
         {/* Premium footer */}
         <footer className="mt-20 border-t border-gray-100 bg-white/60 backdrop-blur-sm py-6 px-8 md:px-12 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-sm text-gray-400 font-medium">
-            &copy; 2024 AI Resume Builder. Empowering careers globally.
+            &copy; AI Resume Builder. Empowering careers globally.
           </p>
           <div className="flex items-center gap-4">
             <Button variant="ghost" className="text-gray-400 hover:text-indigo-600 transition-colors" onClick={handleClick}>
