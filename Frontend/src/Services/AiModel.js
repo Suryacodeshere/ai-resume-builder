@@ -131,27 +131,25 @@ export const AIChatSession = {
     
     Current resume raw text (use if file upload is missing): "${rawText || ""}"
     
-    CRITICAL 1-PAGE HIERARCHICAL COMPRESSION RULES:
-    The resulting resume MUST strictly fit onto ONE single 1-page A4 LaTeX format. To guarantee this, apply this exact summarization hierarchy:
+    CRITICAL 1-PAGE OPTIMAL FULL-PAGE UTILIZATION RULES:
+    The resulting resume MUST fill out and strictly fit onto ONE single 1-page A4 LaTeX format without leaving awkward bottom blank space and without spilling over to page 2:
 
-    1. FIRST PRIORITY TO CONDENSE (Secondary Sections):
-       - Leadership & Community / Volunteering / Custom Section (e.g. NeoG Camp, mentoring, clubs): MUST be captured into 'customSection'. Condense into strictly 1 single concise, punchy bullet point combining role, organization, and primary outcome in 1-2 lines maximum (e.g., "• Mentored 10K+ developers in React & web development at NeoG Camp, hosting regular problem-solving workshops (Sep 2021 – Jun 2023)").
-       - Achievements & Awards: Condense into 1-2 ultra-concise, single-line bullets.
-       - Certifications: Keep as clean 1-line title and date.
-
-    2. SECOND PRIORITY TO CONDENSE (Skills & Projects):
-       - Technical Skills: Group into strictly 3-4 clean categories (e.g., 'Languages & Frameworks', 'State & Tools', 'Architecture & Performance').
-       - Projects: Exactly 2 tight, punchy bullet points per project focusing on architecture, tech stack, and quantified metrics.
-       - Internships / Junior Roles: Max 2 concise bullet points highlighting core technical contributions.
-
-    3. THIRD PRIORITY (Core Experience & Summary):
-       - Primary Senior / Mid Experience: 2 to 3 strong, metric-driven bullet points using Google's XYZ formula: Accomplished [X], measured by [Y], by doing [Z].
-       - Summary: Exactly 2 concise lines highlighting target role, years of experience, and primary tech stack.
-       - Education: Clean 1 line per degree.
-
-    4. PRESERVE 100% FACTUAL CONTEXT:
-       - Keep all real companies, degrees, tech tools, metrics, GitHub/live links, and dates. Do not drop real sections—summarize them compactly so they all fit on 1 page!
-    5. Output strictly as a JSON object matching this schema. Do not write markdown annotations.
+    1. WORK EXPERIENCE:
+       - Full-time / Core roles: 3 strong, quantified bullet points (Google XYZ formula: Accomplished [X], measured by [Y], by doing [Z]).
+       - Internships / Junior roles: 2 concise, high-impact bullet points.
+    2. PROJECTS:
+       - 2 detailed, high-impact bullet points per project detailing technical architecture, libraries used, and measurable results.
+    3. LEADERSHIP & COMMUNITY / VOLUNTEERING / CUSTOM SECTION:
+       - Capture as 'customSection'. Provide 2 to 3 concise, impactful bullet points detailing specific responsibilities, community size (e.g. 10K+ learners), mentoring, and workshop outcomes with dates.
+    4. TECHNICAL SKILLS:
+       - Group into 4 clean, comprehensive categories (e.g., 'Languages & Frameworks', 'State & Data', 'UI & Styling', 'Tools & Cloud').
+    5. ACHIEVEMENTS & CERTIFICATIONS:
+       - Include 2-3 concise achievements or certifications if present in the source resume.
+    6. SUMMARY:
+       - 2 to 3 well-written, punchy lines highlighting key strengths, domain expertise, and core tech stack.
+    7. PRESERVE 100% FACTUAL CONTEXT:
+       - Keep all real organizations (e.g. NeoG Camp), degrees, companies, metrics, and links. Never drop real sections.
+    8. Output strictly as a JSON object matching this schema. Do not write markdown annotations.
     `;
 
     parts.push({ text: promptText });
