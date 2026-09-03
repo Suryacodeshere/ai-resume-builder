@@ -108,16 +108,18 @@ const getResume = async (req, res) => {
 };
 
 const updateResume = async (req, res) => {
-  console.log("Resume update request received:");
   const id = req.query.id;
 
   try {
-    // Find and update the resume with the provided ID and user ID
-    console.log("Database update request started");
+    const updateData = { ...req.body };
+    delete updateData._id;
+    delete updateData.user;
+    delete updateData.createdAt;
+
     const updatedResume = await Resume.findOneAndUpdate(
       { _id: id, user: req.user._id },
-      { $set: req.body, $currentDate: { updatedAt: true } }, // Set updatedAt to current date
-      { new: true } // Return the modified document
+      { $set: updateData, $currentDate: { updatedAt: true } },
+      { new: true }
     );
 
     if (!updatedResume) {

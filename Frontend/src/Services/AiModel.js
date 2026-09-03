@@ -131,11 +131,25 @@ export const AIChatSession = {
     
     Current resume raw text (use if file upload is missing): "${rawText || ""}"
     
-    CRITICAL EXTRACTION RULES:
-    1. NEVER SKIP CUSTOM OR LEADERSHIP SECTIONS: If the resume contains a section such as 'Leadership & Community', 'Community', 'Volunteering', 'Positions of Responsibility', 'Extracurricular', or 'Open Source', you MUST extract it into 'customSection'. Put the exact heading in 'sectionTitle' (e.g. 'Leadership & Community') and format the roles/bullets as HTML '<ul><li>...</li></ul>' in 'summary'.
-    2. If the resume has an 'Achievements' or 'Honors & Awards' section, populate the 'achievements' array. If achievements are not present but another custom section is present (like 'Leadership & Community'), make sure it is captured in 'customSection'.
-    3. Keep summaries and descriptions concise (2-3 punchy bullets) so the entire resume stays within 1 single A4 page.
-    4. Do not invent fake details. Preserve 100% of real organizations (e.g., NeoG Camp, clubs, hackathons, companies), dates, and metrics.
+    CRITICAL 1-PAGE HIERARCHICAL COMPRESSION RULES:
+    The resulting resume MUST strictly fit onto ONE single 1-page A4 LaTeX format. To guarantee this, apply this exact summarization hierarchy:
+
+    1. FIRST PRIORITY TO SUMMARIZE (Secondary Sections):
+       - Achievements & Awards: Condense into 1-2 ultra-concise, single-line bullets.
+       - Leadership & Community / Volunteering / Custom Section (e.g. NeoG Camp, mentoring, clubs): MUST be captured into 'customSection'. Condense into strictly 1-2 concise, high-impact bullet points combining role, organization, and primary outcome in a single line (e.g., "• Mentored 10K+ developers in React & web development, hosting regular technical problem-solving workshops at NeoG Camp (Sep 2021 – Jun 2023)").
+       - Certifications: Keep as clean 1-line title and date.
+
+    2. SECOND PRIORITY TO SUMMARIZE (Projects & Internships):
+       - Projects: Exactly 2 tight, punchy bullet points per project focusing on architecture, tech stack, and quantified metrics.
+       - Internships / Junior Roles: Max 2 concise bullet points highlighting core technical contributions.
+
+    3. THIRD PRIORITY (Core Experience & Summary):
+       - Primary Senior / Mid Experience: 2 to 3 strong, metric-driven bullet points using Google's XYZ formula: Accomplished [X], measured by [Y], by doing [Z].
+       - Summary: Exactly 2 concise, powerful lines highlighting core tech stack and domain expertise.
+       - Education: Clean 1-2 lines per degree.
+
+    4. PRESERVE 100% FACTUAL CONTEXT:
+       - Keep all real companies, degrees, tech tools, metrics, GitHub/live links, and dates. Do not drop real sections—summarize them compactly so they all fit on 1 page!
     5. Output strictly as a JSON object matching this schema. Do not write markdown annotations.
     `;
 

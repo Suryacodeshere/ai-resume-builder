@@ -68,20 +68,6 @@ function ResumeForm() {
             </Button>
           </Link>
           <ThemeColor resumeInfo={resumeInfo}/> 
-          <Button
-            variant="outline"
-            size="sm"
-            disabled={condensing}
-            onClick={handleAutoFit1Page}
-            className="flex items-center gap-1.5 border-purple-300 text-purple-700 hover:bg-purple-50 hover:text-purple-800 font-semibold"
-          >
-            {condensing ? (
-              <LoaderCircle className="h-4 w-4 animate-spin text-purple-600" />
-            ) : (
-              <Sparkles className="h-4 w-4 text-purple-600" />
-            )}
-            Auto-Fit 1 Page
-          </Button>
         </div>
         <div className="flex items-center gap-3">
           {currentIndex > 0 && (
@@ -185,20 +171,7 @@ function ResumeForm() {
               Congratulations! Your interview-ready resume has been formatted. You can now download it as a PDF or share it.
             </p>
           </div>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2 flex-wrap">
-            <Button
-              variant="outline"
-              disabled={condensing}
-              onClick={handleAutoFit1Page}
-              className="border-purple-300 text-purple-700 hover:bg-purple-50 hover:text-purple-800 rounded-xl px-5 py-2.5 font-bold transition-all flex items-center gap-2 shadow-sm font-sans"
-            >
-              {condensing ? (
-                <LoaderCircle className="h-4 w-4 animate-spin text-purple-600" />
-              ) : (
-                <Sparkles className="h-4 w-4 text-purple-600" />
-              )}
-              Auto-Fit to 1 Page with AI
-            </Button>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
             <Button 
               onClick={() => window.print()}
               className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl px-6 py-2.5 font-bold transition-all flex items-center gap-2 shadow-lg shadow-indigo-600/15 font-sans"
