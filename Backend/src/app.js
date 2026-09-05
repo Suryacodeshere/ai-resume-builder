@@ -23,6 +23,11 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+// Health check endpoint for cron jobs (e.g., cron-job.org)
+app.get("/", (req, res) => {
+    res.status(200).send("Backend is awake!");
+});
+
 app.use("/api/users", userRouter);
 app.use("/api/resumes", resumeRouter);
 
